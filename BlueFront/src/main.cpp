@@ -441,10 +441,16 @@ int main() {
   intake();
 
   move(30, 80);
-  wait(1000, msec);
+  wait(200, msec);
   turn(45, 80);
-
   move(-35, 75);
+  turn(-45, 80);
+  wait(200, msec);
+  move(15,80);
+  turn(270, 80);
+  move(35, 80);
+  poFoward(80);
+  move(-5, 80); 
   
 
 }
