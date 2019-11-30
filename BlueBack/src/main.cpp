@@ -14,7 +14,7 @@
 // lb                   motor         19              
 // rf                   motor         1               
 // rb                   motor         10              
-// pushOut              motor         13              
+// pushOut              motor         6               
 // intakeLeft           motor         15              
 // intakeRight          motor         5               
 // lift                 motor         16              
@@ -419,7 +419,7 @@ void turn (double distanceIn, double maxVelocity)
 
 void pushOutF() {
   // pushOut.spin(fwd, 60, rpm);
-  pushOut.rotateTo(3.3, rev, 45, rpm, false);
+  pushOut.rotateTo(3.3, rev, 45, rpm, true);
  }
  void pushOutReturn() {
   // pushOut.spin(reverse, 175, rpm);
@@ -428,31 +428,46 @@ void pushOutF() {
 
 void intake () {
   intakeLeft.spin(directionType::fwd, 120, velocityUnits::rpm);
-  intakeRight.spin(directionType::fwd, 120, velocityUnits::rpm); }
+  intakeRight.spin(directionType::fwd, 120, velocityUnits::rpm);
+}
  
- void outake () {
+void outake () {
   intakeLeft.spin(directionType::fwd, -120, velocityUnits::rpm);
   intakeRight.spin(directionType::fwd, -120, velocityUnits::rpm);
  }
+
+void intakeHold() {
+  intakeLeft.stop(hold);
+  intakeRight.stop(hold);
+}
+
+void pushBack() {
+  outake();
+  wait(50, msec);
+  move(-5, 60);
+}
+
 
 int main() {
 
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  //intake is always running
-  intake();
-  //move backwards and align yourself with the boards
-  move(-20, 75); 
-   //wait after collecting cubes, to make sure nothing is shaking
-  wait(100, msec);
-  //Turn 2  to drive back to home
-  turn(2, 80);
-  //drive back to home
-  move(25, 80);
-  //deposit cubes
-  pushOutF();
-  //move back after depositing cubes
-  move(-5, 80); 
-  
 
+  intake();
+
+  move(52, 80);
+  wait(500, msec);
+  move(45, 80);
+
+  turn(0.8, 80);
+  wait(150, msec);
+  move(75, 90);
+
+  turn(0.25, 65);
+  move(2.7, 60);
+  
+  intakeHold();
+  pushOutF();
+  wait(300, msec);
+  pushBack();
 }
