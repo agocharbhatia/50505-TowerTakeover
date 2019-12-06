@@ -56,6 +56,11 @@ using namespace vex;
   pushOut.rotateTo(0, rev, 75, rpm, false);
  }
 
+ void pushOutLift() {
+   pushOut.rotateTo(0.9, rev, 45, rpm, false);
+ }
+ 
+
   void liftL1() {
     pushOut.rotateTo(1.8, rev, 50, rpm, true);
     pushOut.stop(hold);
@@ -77,6 +82,7 @@ using namespace vex;
 
     Controller1.ButtonUp.pressed(pushOutForward);
     Controller1.ButtonDown.pressed(pushOutReturn);
+    Controller1.ButtonRight.pressed(pushOutLift);
   }
 
 void liftControl() {
